@@ -10,6 +10,7 @@ import androidx.paging.PagedList
 import com.gurpster.github.data.entity.Repo
 import com.gurpster.github.data.remote.WebService
 import com.gurpster.github.ui.adapters.RepoDataSourceFactory
+import com.gurpster.github.ui.adapters.SearchDataSourceFactory
 import java.util.*
 
 
@@ -21,6 +22,7 @@ import java.util.*
 class RepoViewModel @ViewModelInject constructor(private val webService: WebService) : ViewModel() {
 
     var listRepos: LiveData<PagedList<Repo>>
+    var searchRepos = MutableLiveData<String>()
 
     init {
 
@@ -32,7 +34,19 @@ class RepoViewModel @ViewModelInject constructor(private val webService: WebServ
             .build()
 
 
-        val defaultFactory = RepoDataSourceFactory(webService)
-        listRepos = LivePagedListBuilder(defaultFactory, pagedListConfig).build()
+        // switch to data source factory
+        listRepos = Transformations.switchMap(searchRepos) { input: String ->
+            if (input.isNotEmpty() && !searchRepos.value.isNullOrEmpty()) {
+                val searchFactory = SearchDataSourceFactory(
+                    webService, input.trim().toLowerCase(
+                        Locale.ROOT
+                    )
+                )
+                return@switchMap LivePagedListBuilder(searchFactory, pagedListConfig).build()
+            } else {
+                val defaultFactory = RepoDataSourceFactory(webService)
+                return@switchMap LivePagedListBuilder(defaultFactory, pagedListConfig).build()
+            }
+        }
     }
 }
