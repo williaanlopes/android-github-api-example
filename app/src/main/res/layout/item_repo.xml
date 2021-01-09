@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repo"
+            type="com.gurpster.github.data.entity.Repo" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="7dp"
+        app:onRepositoryClick="@{ repo }">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="7dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    app:glide="@{repo.owner.avatar_url}"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_toEndOf="@+id/avatar"
+                    android:layout_toRightOf="@+id/avatar"
+                    android:text="@{repo.owner.login}"
+                    tools:text="@tools:sample/lorem" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{repo.full_name}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:text="@tools:sample/full_names" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{repo.description}"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="@tools:sample/full_names" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:gravity="center|end">
+
+                <RelativeLayout
+                    android:id="@+id/stars_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/star_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_baseline_star_border_24"
+                        app:tint="#636363" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/stars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/star_icon"
+                        android:layout_toRightOf="@+id/star_icon"
+                        android:text="@{String.valueOf(repo.stargazers_count)}"
+                        tools:text="@tools:sample/full_names" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/forks_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toEndOf="@+id/stars_container"
+                    android:layout_toRightOf="@+id/stars_container">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/fork_icon"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_git_branch"
+                        app:tint="#636363" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/forks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/fork_icon"
+                        android:layout_toRightOf="@+id/fork_icon"
+                        android:text="@{String.valueOf(repo.forks_count)}"
+                        android:textColor="@android:color/darker_gray"
+                        tools:text="@tools:sample/full_names" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
