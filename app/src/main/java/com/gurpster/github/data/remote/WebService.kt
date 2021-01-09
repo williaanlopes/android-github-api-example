@@ -2,6 +2,7 @@ package com.gurpster.github.data.remote
 
 import androidx.lifecycle.LiveData
 import com.gurpster.github.data.entity.Repo
+import com.gurpster.github.data.entity.Search
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -29,5 +30,12 @@ interface WebService {
         @Path("owner") owner: String,
         @Path("repo") repository: String
     ): LiveData<ApiResponse<Repo>>
+
+    @GET("/search/repositories")
+    fun search(
+        @Query("q") name: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
+    ): Call<Search>
 
 }
