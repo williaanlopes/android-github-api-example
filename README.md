@@ -1,4 +1,11 @@
-### Tools & Technologies
+### Features
+ - [x] List Public Repositories
+ - [x] Search Public Repositories
+ - [ ] Show Repository Details
+ - [ ] Show Woner Details
+ - [ ] Sig in GitHub Acount
+ 
+ ### Tools & Technologies
 - GitHub API: https://developer.github.com/v3
 
 - Hilt: https://developer.android.com/training/dependency-injection/hilt-jetpack
@@ -19,10 +26,3 @@ Used to make HTTP calls and parses the response in java objects instead of manua
 
 - Glide: https://github.com/bumptech/glide
 To supports fetching, decoding, and displaying video stills, images, and animated GIFs.
-
-### Features
- - [x] List Public Repositories
- - [x] Search Public Repositories
- - [ ] Show Repository Details
- - [ ] Show Woner Details
- - [ ] Sig in GitHub Acount
