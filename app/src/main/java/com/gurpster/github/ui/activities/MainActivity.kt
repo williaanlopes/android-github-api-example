@@ -4,8 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.SearchManager
 import android.content.Context
-import android.content.res.Resources
-import android.content.res.TypedArray
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -17,12 +15,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.google.android.material.imageview.ShapeableImageView
 import com.gurpster.github.R
 import com.gurpster.github.data.RepoRepository
-import com.gurpster.github.data.entity.Repo
 import com.gurpster.github.databinding.ActivityMainBinding
 import com.gurpster.github.ui.adapters.RepoAdapter
 import com.gurpster.github.util.Urils.getThemeColor
@@ -51,16 +45,26 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_github);
     }
 
     override fun onResume() {
         super.onResume()
 
+        binding.shimmerViewContainer.startShimmer()
+
         binding.repos.adapter = repoAdapter
         repoViewModel.listRepos.observe(this, {
             repoAdapter.submitList(it)
+
+            if (it != null) {
+                binding.repos.visibility = View.VISIBLE
+                binding.shimmerViewContainer.visibility = View.GONE
+                binding.shimmerViewContainer.stopShimmer()
+            }
         })
-//        repoViewModel.searchRepos.postValue(null)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -129,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                     width.toFloat(),
                     0.0f
                 )
-                createCircularReveal.setDuration(250)
+                createCircularReveal.duration = 250
                 createCircularReveal.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator?) {
                         super.onAnimationEnd(animation)
@@ -164,24 +168,6 @@ class MainActivity : AppCompatActivity() {
                     override fun onAnimationRepeat(animation: Animation?) {}
                 })
                 binding.toolbar.startAnimation(animationSet)
-            }
-        }
-    }
-
-    object DataBindingAdapter {
-        @JvmStatic
-        @BindingAdapter("onRepositoryClick")
-        fun onRepositoryClick(viewGroup: ViewGroup, repo: Repo) {
-            viewGroup.setOnClickListener {
-                TODO()
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("glide")
-        fun glide(view: ShapeableImageView, url: String?) {
-            if (!url.isNullOrEmpty()) {
-                Glide.with(view).load(url).into(view)
             }
         }
     }

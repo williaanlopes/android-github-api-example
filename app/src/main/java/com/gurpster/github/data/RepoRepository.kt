@@ -2,11 +2,14 @@ package com.gurpster.github.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.gurpster.github.NetworkBoundResource
 import com.gurpster.github.data.entity.Repo
-import com.gurpster.github.data.remote.NetworkBoundResource
 import com.gurpster.github.data.remote.Resource
 import com.gurpster.github.data.remote.WebService
-import com.gurpster.github.di.AppExecutorsModule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -16,25 +19,23 @@ import javax.inject.Inject
  */
 
 class RepoRepository @Inject constructor(
-    private val appExecutors: AppExecutorsModule,
     private val webService: WebService
 ) {
 
-    fun details(owner: String, name: String): LiveData<Resource<Repo>> {
-        return object : NetworkBoundResource<Repo, Repo>(appExecutors) {
-            override fun saveCallResult(item: Repo) {
+    fun repo(owner: String, name: String): LiveData<Resource<Repo>> {
+        val liveData = MutableLiveData<Resource<Repo>>()
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val user = async { webService.getUserAsync(name) }.await()
+                val rep = async { webService.getRepoAsync(owner, name) }.await()
+                if (user != null) {
+                    rep.user = user
+                }
+                liveData.postValue(Resource.success(rep))
+            } catch (e: Exception) {
+                liveData.postValue(Resource.error(e.message.toString(), null))
             }
-
-            override fun shouldFetch(data: Repo): Boolean {
-                return true
-            }
-
-            override fun loadFromDb(): LiveData<Repo> {
-                return MutableLiveData()
-            }
-
-            override fun createCall() = webService.getDetails(owner, name)
-
-        }.asLiveData()
+        }
+        return liveData
     }
 }

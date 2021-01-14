@@ -5,6 +5,8 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.gurpster.github.di.AppExecutorsModule
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 /**
@@ -31,7 +33,6 @@ abstract class NetworkBoundResource<RequestType, ResultType>
 
     private fun fetchFromNetwork() {
         val apiResponse = createCall()
-//        result.removeSource(dbSource)
         result.addSource(apiResponse) { response ->
             result.removeSource(apiResponse)
             when (response) {
