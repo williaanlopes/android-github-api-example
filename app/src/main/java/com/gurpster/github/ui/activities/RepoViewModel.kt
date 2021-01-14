@@ -22,7 +22,7 @@ import java.util.*
 class RepoViewModel @ViewModelInject constructor(private val webService: WebService) : ViewModel() {
 
     var listRepos: LiveData<PagedList<Repo>>
-    var searchRepos = MutableLiveData<String>()
+    var searchRepos = MutableLiveData("")
 
     init {
 

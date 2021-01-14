@@ -1,8 +1,9 @@
 package com.gurpster.github.data.remote
 
-import androidx.lifecycle.LiveData
 import com.gurpster.github.data.entity.Repo
 import com.gurpster.github.data.entity.Search
+import com.gurpster.github.data.entity.User
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,20 +17,22 @@ import retrofit2.http.Query
 
 interface WebService {
 
+    @GET("/users/{name}")
+    suspend fun getUserAsync(
+        @Path("name") name: String
+    ): User?
+
+    @GET("/repos/{owner}/{repo}")
+    suspend fun getRepoAsync(
+        @Path("owner") owner: String,
+        @Path("repo") repository: String
+    ): Repo
+
     @GET("/repositories")
     fun listRepos(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): Call<List<Repo>> //LiveData<ApiResponse<List<Repo>>>
-
-    @GET("/users/{owner}")
-    fun getRepos(): LiveData<ApiResponse<List<Repo>>>
-
-    @GET("/repos/{owner}/{repo}")
-    fun getDetails(
-        @Path("owner") owner: String,
-        @Path("repo") repository: String
-    ): LiveData<ApiResponse<Repo>>
+    ): Call<List<Repo>>
 
     @GET("/search/repositories")
     fun search(

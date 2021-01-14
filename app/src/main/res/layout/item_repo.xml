@@ -19,6 +19,7 @@
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:contentPadding="7dp"
+        app:cardBackgroundColor="@color/white"
         app:onRepositoryClick="@{ repo }">
 
         <LinearLayout
