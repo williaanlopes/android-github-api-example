@@ -1,9 +1,3 @@
-#### Requirements
-- Android Studio 4.1.1
-- JDK +8
-- Android SDK 29
-- Supports API Level +19
-
 #### Features
  - [x] List Public Repositories
  - [x] Search Public Repositories
