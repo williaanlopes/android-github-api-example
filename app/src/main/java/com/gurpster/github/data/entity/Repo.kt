@@ -83,4 +83,6 @@ data class Repo(
     val url: String,
     val watchers: Int,
     val watchers_count: Int
-)
+) {
+    var user: User? = null
+}

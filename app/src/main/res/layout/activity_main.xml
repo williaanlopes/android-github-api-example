@@ -18,7 +18,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:theme="@style/ToolbarTheme" />
+                app:theme="@style/ToolbarTheme"
+                app:title="@string/app_name"
+                app:titleMarginStart="5dp" />
 
             <View
                 android:id="@+id/anchor_dropdown"
@@ -26,20 +28,20 @@
                 android:layout_height="0dp" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center|start">
+                android:gravity="center|start"
+                android:visibility="gone">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/toolbar_icon"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
-                    android:layout_margin="5dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+                    android:layout_margin="5dp"
                     android:gravity="center"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                     app:srcCompat="@drawable/ic_github" />
@@ -60,12 +62,55 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/repos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingTop="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+                    <include layout="@layout/item_repo_shimmer" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
