@@ -13,6 +13,9 @@ A library for composing asynchronous and event-based programs by using observabl
 - [RxAndroid](https://github.com/ReactiveX/RxJava)
 Adds the minimum classes to RxJava that make writing reactive components in Android applications easy and hassle-free.
 
+- [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
+A concurrency design pattern that you can use on Android to simplify code that executes asynchronously. Coroutines were added to Kotlin in version 1.3 and are based on established concepts from other languages.
+
 - [Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack)
 Provides a standard way to incorporate Dagger dependency injection into an Android application.
 
